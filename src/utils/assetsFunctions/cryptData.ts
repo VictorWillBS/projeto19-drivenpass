@@ -1,0 +1,10 @@
+import bcrypt from 'bcrypt';
+
+export function encriptByHash(password:string){
+  const newPassword = bcrypt.hashSync(password,10)
+  return newPassword
+}
+export function comparePassword(password:string|any, encryptedPassword:string){
+  const isSame = bcrypt.compareSync(password,encryptedPassword)
+  return isSame
+}
