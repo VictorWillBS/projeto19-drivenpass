@@ -21,3 +21,8 @@ export async function getUserNotesById(userId:number|any,id:number|any) {
   const notes:notes[] | null=await prisma.notes.findMany({where:{userId,id}});
   return notes
 }
+
+export async function deleteNote(userId:number|any,id:number|any){
+  await prisma.notes.deleteMany({ where:{userId,id}})
+  return true
+}

@@ -33,3 +33,14 @@ export async function getUserNoteById(token:{id:string},id:number) {
   }
   return notes
 }
+export async function deleteNote(token:{id:string},id:number) {
+  const tokenId : number = Number(token.id);
+  const userId : number|undefined = await getUserIdByTokenId(tokenId);
+  const notes: notes[]|null = await notesRepository.getUserNotesById(userId,id)
+  if(!notes.length){
+    throw{ code:'Not Found', message:'Credential not founded.'}
+  }
+  const deleteSucess: boolean = await notesRepository.deleteNote(userId,id)
+  
+  return deleteSucess
+}

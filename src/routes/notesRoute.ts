@@ -8,5 +8,5 @@ const notesRoute = Router();
 notesRoute.post('/notes/create',verifyToken,validSchema(createNotesSchemas),noteController.createNotes)
 notesRoute.get('/notes',verifyToken,noteController.getUserNote)
 notesRoute.get('/notes/:id',verifyToken,noteController.getUserNoteById)
-
+notesRoute.delete('/notes/:id',verifyToken,noteController.deleteNote)
 export default notesRoute
