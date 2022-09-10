@@ -5,6 +5,7 @@ import CredentialSchema from '../utils/schemas/createCredentialSchema';
 import * as credentialController from '../controller/credentialsController'
 const credentialRoute = Router();
 
-credentialRoute.post('/create/credential',verifyToken,validSchema(CredentialSchema),credentialController.createCredential);
-
+credentialRoute.post('/credential/create',verifyToken,validSchema(CredentialSchema),credentialController.createCredential);
+credentialRoute.get('/credentials',verifyToken,credentialController.getCredentials)
+credentialRoute.get('/credential/:id',verifyToken,credentialController.getUserCredentialByID)
 export default credentialRoute

@@ -17,3 +17,8 @@ export function encript(password:string|any){
   const newPassword = cryptr.encrypt(password);
   return newPassword
 }
+
+export function decript(dataEncrypted:any){
+  const dataDecripted = cryptr.decrypt(dataEncrypted)
+  return dataDecripted
+}

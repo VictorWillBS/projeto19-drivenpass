@@ -25,3 +25,9 @@ export async function insertCredential(credentialData: CrendentialPartial | any,
       }
     })
 }
+
+export async function getUserCredentialsById(userId:number|any,id:number|any) {
+  console.log(id)
+  const credentials: credentials[] | null = await prisma.credentials.findMany({ where: { userId,id } })
+  return credentials
+}
