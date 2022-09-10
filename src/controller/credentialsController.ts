@@ -21,3 +21,10 @@ export async function getUserCredentialByID(req:Request,res:Response) {
   const credential : credentials[]|null= await credentialService.getUserCredentialByID(token,id)
   res.status(200).send(credential)
 }
+
+export async function deleteCredential(req:Request,res:Response){
+  const token:{id:string}= res.locals.tokenDecoded;
+  const id : number = Number(req.params.id)
+  await credentialService.deleteCredential(token,id)
+  res.status(200).send('Sucessful Delete.')
+}

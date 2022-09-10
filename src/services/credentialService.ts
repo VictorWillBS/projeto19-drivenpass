@@ -19,21 +19,13 @@ export async function createCredential(credentialData:CrendentialPartial,token:{
   await credentialRepository.insertCredential(credentialData,userId,encriptPassword);
 }
 
-function verifyCredentialTitleExist(title:string|undefined,credentialList : credentials[]){
-  if(!credentialList.length) false
-
-  for(let i = 0; i< credentialList.length; i++){
-    if(credentialList[i].title===title){
-      return true
-    }
-  }
-  return false
-}
-
 export async function getCredential(token:{id:string}) {
   const tokenId : number = Number(token.id);
   const userId : number|undefined = await getUserIdByTokenId(tokenId);
   const credentials:credentials[] = await credentialRepository.getCredentialsByUserId(userId);
+  if(!credentials.length){
+    throw{ code:'Not Found', message:'Credential not founded.'}
+  }
   decriptCredentialPasswords(credentials)
   return credentials
 }
@@ -49,9 +41,45 @@ export async function getUserCredentialByID(token:{id:string},id:number) {
   return credentials
 }
 
+export async function deleteCredential(token:{id:string},id:number){
+  const tokenId : number = Number(token.id);
+  const userId : number|undefined = await getUserIdByTokenId(tokenId);
+  const credentials:credentials[] = await credentialRepository.getCredentialsByUserId(userId);
+  if(!credentials.length){
+    throw{ code:'Not Found', message:'Credential not founded.'}
+  }
+  const credentialExist = verifyCredentialExist(id,credentials)
+  if(!credentialExist){
+    throw{ code:'Not Found', message:'Credential not founded.'}
+  }
+  await credentialRepository.deleteCredential(userId,id)
+}
+
+
+function verifyCredentialTitleExist(title:string|undefined,credentialList : credentials[]){
+  if(!credentialList.length) false
+
+  for(let i = 0; i< credentialList.length; i++){
+    if(credentialList[i].title===title){
+      return true
+    }
+  }
+  return false
+}
 function decriptCredentialPasswords(credentials:credentials[]){
   credentials.forEach((credential)=>{
     const decriptPassword = cryptData.decript(credential.password)
     credential.password=decriptPassword
   })
+}
+
+function verifyCredentialExist(id:number|null,credentialList : credentials[]){
+  if(!credentialList.length) false
+
+  for(let i = 0; i< credentialList.length; i++){
+    if(credentialList[i].id===id){
+      return true
+    }
+  }
+  return false
 }

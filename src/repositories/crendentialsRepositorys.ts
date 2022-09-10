@@ -2,6 +2,7 @@ import prisma from "../database/database";
 import { session } from "@prisma/client";
 import { credentials } from "@prisma/client";
 import { CrendentialPartial } from "../types/credentialTypes";
+
 export async function getUserIdByTokenId(tokenId: number) {
   const sessionData: session | null = await prisma.session.findUnique({ where: { id: tokenId } })
   return sessionData?.userId
@@ -30,4 +31,8 @@ export async function getUserCredentialsById(userId:number|any,id:number|any) {
   console.log(id)
   const credentials: credentials[] | null = await prisma.credentials.findMany({ where: { userId,id } })
   return credentials
+}
+
+export async function deleteCredential(userId:number|any,id:number|any) {
+  await prisma.credentials.deleteMany({where:{userId,id}})
 }
