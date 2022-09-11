@@ -1,6 +1,7 @@
-import * as credentialRepository from '../../repositories/sessionRepository';
+import * as sessionRepository from '../../repositories/sessionRepository';
 
-export default async function getUserIdByTokenId(tokenId : number) {
-  const userId:number|undefined = await credentialRepository.getUserIdByTokenId(tokenId);
+export default async function getUserIdByTokenId(token:{id:string}) {
+  const tokenId : number = Number(token.id);
+  const userId:number|undefined = await sessionRepository.getUserIdByTokenId(tokenId);
   return userId
 }

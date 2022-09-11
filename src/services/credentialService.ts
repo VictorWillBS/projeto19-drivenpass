@@ -6,8 +6,7 @@ import { verifyTitleExist,verifyCategoryElementExist } from '../utils/assetsFunc
 import getUserIdByTokenId from '../utils/assetsFunctions/userToken';
 
 export async function createCredential(credentialData:CrendentialPartial,token:{id:string}) {
-  const tokenId : number = Number(token.id);
-  const userId : number|undefined = await getUserIdByTokenId(tokenId);
+  const userId : number|undefined = await getUserIdByTokenId(token);
   const credentials:credentials[] = await credentialRepository.getCredentialsByUserId(userId);
   const titleExist = verifyTitleExist(credentialData.title,credentials);
   if(titleExist){
@@ -18,8 +17,7 @@ export async function createCredential(credentialData:CrendentialPartial,token:{
 }
 
 export async function getCredential(token:{id:string}) {
-  const tokenId : number = Number(token.id);
-  const userId : number|undefined = await getUserIdByTokenId(tokenId);
+  const userId : number|undefined = await getUserIdByTokenId(token);
   const credentials:credentials[] = await credentialRepository.getCredentialsByUserId(userId);
   if(!credentials.length){
     throw{ code:'Not Found', message:'Credential not founded.'}
@@ -29,8 +27,7 @@ export async function getCredential(token:{id:string}) {
 }
 
 export async function getUserCredentialByID(token:{id:string},id:number) {
-  const tokenId : number = Number(token.id);
-  const userId : number|undefined = await getUserIdByTokenId(tokenId);
+  const userId : number|undefined = await getUserIdByTokenId(token);
   const credentials:credentials[] = await credentialRepository.getUserCredentialsById(userId,id);
   if(!credentials.length){
     throw{ code:'Not Found', message:'Credential not founded.'}
@@ -40,8 +37,7 @@ export async function getUserCredentialByID(token:{id:string},id:number) {
 }
 
 export async function deleteCredential(token:{id:string},id:number){
-  const tokenId : number = Number(token.id);
-  const userId : number|undefined = await getUserIdByTokenId(tokenId);
+  const userId : number|undefined = await getUserIdByTokenId(token);
   const credentials:credentials[] = await credentialRepository.getCredentialsByUserId(userId);
   if(!credentials.length){
     throw{ code:'Not Found', message:'Credential not founded.'}
