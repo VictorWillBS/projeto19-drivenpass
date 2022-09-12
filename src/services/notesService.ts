@@ -2,6 +2,7 @@ import { notes } from "@prisma/client";
 import { noteData } from "../types/notesTypes";
 import getUserIdByTokenId from "../utils/assetsFunctions/userToken";
 import * as notesRepository from '../repositories/noteRepository'
+import { verifyIdExist } from "../utils/assetsFunctions/verifyFunctions";
 
 export async function createNote(noteData: noteData,token:{id:string}) {
   const userId : number|undefined = await getUserIdByTokenId(token);
@@ -34,6 +35,10 @@ export async function deleteNote(token:{id:string},id:number) {
   const userId : number|undefined = await getUserIdByTokenId(token);
   const notes: notes[]|null = await notesRepository.getUserNotesById(userId,id)
   if(!notes.length){
+    throw{ code:'Not Found', message:'Credential not founded.'}
+  }
+  const noteExist : boolean = verifyIdExist(id,notes) 
+  if(!noteExist){
     throw{ code:'Not Found', message:'Credential not founded.'}
   }
   const deleteSucess: boolean = await notesRepository.deleteNote(userId,id)

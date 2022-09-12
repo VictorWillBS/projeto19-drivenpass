@@ -4,7 +4,7 @@ import * as cryptData from '../utils/assetsFunctions/cryptData';
 import getUserIdByTokenId from '../utils/assetsFunctions/userToken';
 import decriptListPasswords from '../utils/assetsFunctions/decriptFunctions';
 import * as credentialRepository from '../repositories/crendentialsRepositorys';
-import { verifyTitleExist,verifyCategoryElementExist } from '../utils/assetsFunctions/verifyFunctions';
+import { verifyTitleExist,verifyIdExist } from '../utils/assetsFunctions/verifyFunctions';
 
 export async function createCredential(credentialData:CrendentialPartial,token:{id:string}) {
   const userId : number|undefined = await getUserIdByTokenId(token);
@@ -43,7 +43,7 @@ export async function deleteCredential(token:{id:string},id:number){
   if(!credentials.length){
     throw{ code:'Not Found', message:'Credential not founded.'}
   }
-  const credentialExist = verifyCategoryElementExist(id,credentials)
+  const credentialExist = verifyIdExist(id,credentials)
   if(!credentialExist){
     throw{ code:'Not Found', message:'Credential not founded.'}
   }

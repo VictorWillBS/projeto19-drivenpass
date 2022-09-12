@@ -6,11 +6,18 @@ export async function insertWifi(wifiData:wifiData,userId:number|any,encryptedPa
   return true
 }
 
-export async function getWifis(userId:number|any) {
+export async function getUserWifis(userId:number|any) {
   const wifis:wifi[] = await prisma.wifi.findMany({where:{userId}})
   return wifis
 }
+
 export async function getWifiById(userId:number|any,id:number|any) {
   const wifis:wifi[] = await prisma.wifi.findMany({where:{userId,id}})
   return wifis
 }
+
+export async function deleteWifi(userId:number|any,id:number|any) {
+  await prisma.wifi.deleteMany({where:{userId,id}})
+  return true
+}
+

@@ -10,7 +10,7 @@ export function verifyTitleExist(title:string|undefined,list : notes[]|credentia
   return false
 }
 
-export function verifyCategoryElementExist(id:number|null,list : credentials[]){
+export function verifyIdExist(id:number|null,list : notes[]|credentials[]|wifi[]|any){
   if(!list.length) false
 
   for(let i = 0; i< list.length; i++){
