@@ -11,7 +11,7 @@ export async function createCard(cardData: CardData,token:{id:string}) {
   const cards: cards[] =  await cardRepository.getCards(userId);
    const titleExiste = verifyTitleExist(cardData.title,cards);
   if(titleExiste){
-    throw{code:'Conflict', message: 'Card Already Exist.'}
+    throw{code:'Conflict', message: 'CardName Already Exist.'}
   }
   const encriptCardData:CardData = encryptCardData(cardData);
   
@@ -39,6 +39,14 @@ export async function getCardById(token:{id:string},id:number) {
   return cards
 }
 
+export async function deleteCard(token:{id:string},id:number) {
+  const userId : number|undefined = await getUserIdByTokenId(token);
+  const cards: cards[] =  await cardRepository.getCardById(userId,id);
+  if (!cards.length){
+    throw{code:'Not Found', message:'Cards Not Founded.'}
+  }
+  await cardRepository.deleteCard(userId,id)
+}
 
 function encryptCardData(cardData: CardData){
   cardData.cvv = cryptData.encript(cardData.cvv)

@@ -20,3 +20,7 @@ export async function insertCard(cardData:CardData,userId:number|any){
     console.log(error)
   }
 }
+
+export async function deleteCard(userId: number|any, id:number) {
+  await prisma.cards.deleteMany({where:{userId,id}})
+}

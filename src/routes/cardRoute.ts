@@ -10,5 +10,5 @@ const cardRouter = Router();
 cardRouter.post('/card/create',verifyToken,validSchema(createCardSchema),cardController.createCard)
 cardRouter.get('/cards',verifyToken,cardController.getCards)
 cardRouter.get('/card/:id',verifyToken,verifyId,cardController.getCardById)
-cardRouter.delete('/card/:id',verifyToken,verifyId)
+cardRouter.delete('/card/:id',verifyToken,verifyId,cardController.deleteCard)
 export default cardRouter
