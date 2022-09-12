@@ -32,12 +32,12 @@ model session{
 
 model cards{
   id Int @id @default(autoincrement())
-  title String
+  title String 
   name String  
   cardNumber String  @db.Text
   cvv String @db.Text
   password String @db.Text
-  expirationDate DateTime @db.Date
+  expirationDate String 
   isVirtual Boolean
   type cardRole
   user users @relation(fields: [userId],references: [id])
@@ -53,7 +53,7 @@ enum cardRole{
 
 model credentials{
   id Int @id @default(autoincrement())
-  title String  
+  title String   
   username String  @db.VarChar(100)
   url String @db.Text
   password String @db.Text
@@ -64,7 +64,7 @@ model credentials{
 
 model wifi{
   id Int @id @default(autoincrement())
-  title String  
+  title String   
   wifiName String  @db.VarChar(100)
   password String @db.Text
   user users @relation(fields: [userId],references: [id])
