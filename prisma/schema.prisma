@@ -32,8 +32,9 @@ model session{
 
 model cards{
   id Int @id @default(autoincrement())
+  title String
   name String  
-  cardNumber String  @db.VarChar(100)
+  cardNumber String  @db.Text
   cvv String @db.Text
   password String @db.Text
   expirationDate DateTime @db.Date

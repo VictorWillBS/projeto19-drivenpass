@@ -1,5 +1,5 @@
 import { notes,credentials, wifi, cards } from "@prisma/client"
-export function verifyTitleExist(title:string|undefined,list : notes[]|credentials[]){
+export function verifyTitleExist(title:string|undefined,list : notes[]|credentials[]|cards[]){
   if(!list.length) false
 
   for(let i = 0; i< list.length; i++){
@@ -10,7 +10,7 @@ export function verifyTitleExist(title:string|undefined,list : notes[]|credentia
   return false
 }
 
-export function verifyIdExist(id:number|null,list : notes[]|credentials[]|wifi[]|any){
+export function verifyIdExist(id:number|null,list : notes[]|credentials[]|wifi[]| cards[]){
   if(!list.length) false
 
   for(let i = 0; i< list.length; i++){

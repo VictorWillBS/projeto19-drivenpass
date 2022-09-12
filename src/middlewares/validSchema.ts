@@ -1,12 +1,11 @@
-import { Request,Response, NextFunction } from "express";
+import { Request, Response, NextFunction } from "express";
 
-export default function validSchema(Schema:any){
-  console.log( 'entrei valid')
-  const value = (req:Request,res:Response,next: NextFunction)=>{
+export default function validSchema(Schema: any) {
+  const value = (req: Request, res: Response, next: NextFunction) => {
     const toValid = req.body;
-    const {error} = Schema.validate(toValid)
-    if(error){
-      throw{code:'Unprocessable Entity', message:`Incorret Data Format.`}
+    const { error } = Schema.validate(toValid)
+    if (error) {
+      throw { code: 'Unprocessable Entity', message: `Incorret Data Format.` }
     }
     next()
   }
