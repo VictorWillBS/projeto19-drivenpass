@@ -1,9 +1,10 @@
 import { credentials } from '@prisma/client';
 import { CrendentialPartial } from '../types/credentialTypes';
 import * as cryptData from '../utils/assetsFunctions/cryptData';
+import getUserIdByTokenId from '../utils/assetsFunctions/userToken';
+import decriptListPasswords from '../utils/assetsFunctions/decriptFunctions';
 import * as credentialRepository from '../repositories/crendentialsRepositorys';
 import { verifyTitleExist,verifyCategoryElementExist } from '../utils/assetsFunctions/verifyFunctions';
-import getUserIdByTokenId from '../utils/assetsFunctions/userToken';
 
 export async function createCredential(credentialData:CrendentialPartial,token:{id:string}) {
   const userId : number|undefined = await getUserIdByTokenId(token);
@@ -22,7 +23,7 @@ export async function getCredential(token:{id:string}) {
   if(!credentials.length){
     throw{ code:'Not Found', message:'Credential not founded.'}
   }
-  decriptCredentialPasswords(credentials)
+  decriptListPasswords(credentials)
   return credentials
 }
 
@@ -32,7 +33,7 @@ export async function getUserCredentialByID(token:{id:string},id:number) {
   if(!credentials.length){
     throw{ code:'Not Found', message:'Credential not founded.'}
   }
-  decriptCredentialPasswords(credentials)
+  decriptListPasswords(credentials)
   return credentials
 }
 
